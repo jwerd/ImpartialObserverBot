@@ -24,6 +24,16 @@ services:
       - .:/var/www/html
     networks:
       - digi
+#  ngrok:
+#    image: wernight/ngrok
+#    links:
+#      - app
+#    ports:
+#      - "4040:80"
+#    volumes:
+#      - .:/var/www/html
+#    networks:
+#      - digi
   mysql:
     image: mysql:5.7
     ports:

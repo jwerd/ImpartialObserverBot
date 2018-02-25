@@ -5,6 +5,7 @@ namespace App\Http\Conversations;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Conversations\Conversation;
 use App\Contracts\Steps;
+use Illuminate\Support\Facades\Auth;
 
 class Reattribute extends Conversation implements Steps
 {
@@ -20,6 +21,8 @@ class Reattribute extends Conversation implements Steps
             if($answer->getText() === "more") {
                 $this->askExtended();
             }
+
+            \Log::info("Step Reattribute with id: ".Auth::id());
 
             $this->answer_step2 = $answer->getText();
 

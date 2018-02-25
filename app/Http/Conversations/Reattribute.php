@@ -6,10 +6,10 @@ use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Conversations\Conversation;
 use App\Contracts\Steps;
 
-class Relabel extends Conversation implements Steps
+class Reattribute extends Conversation implements Steps
 {
-    protected $question = 'Step 1 - Relabel: Recognize that the intrusive obsessive thoughts and urges are the RESULT OF OCD/ADDICTION.';
-    protected $answer_step1;
+    protected $question = 'Step 2 - Reattribute: Realize that the intensity and intrusiveness of the thought or urge is CAUSED BY OCD; it is probably related to a biochemical imbalance in the brain.';
+    protected $answer_step2;
 
     /**
      * @return mixed
@@ -21,9 +21,9 @@ class Relabel extends Conversation implements Steps
                 $this->askExtended();
             }
 
-            $this->answer_step1 = $answer->getText();
+            $this->answer_step2 = $answer->getText();
 
-            $this->bot->startConversation(new Reattribute());
+            $this->bot->startConversation(new Refocus());
         });
     }
 

@@ -31,6 +31,8 @@ class BotManController extends Controller
      */
     public function startConversation(BotMan $bot)
     {
+        \Log::info($bot->getUser()->getId());
+
         $bot->startConversation(new StartConversation());
     }
 }

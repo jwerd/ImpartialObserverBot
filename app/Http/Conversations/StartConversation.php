@@ -2,6 +2,7 @@
 
 namespace App\Http\Conversations;
 
+use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
@@ -9,13 +10,6 @@ use BotMan\BotMan\Messages\Conversations\Conversation;
 
 class StartConversation extends Conversation
 {
-    protected $steps = [
-        'Relabel'     => Steps\Relabel::class,
-        'Reattribute' => Steps\Reattribute::class,
-        'Refocus'     => Steps\Refocus::class,
-        'Revalue'     => Steps\Revalue::class,
-    ];
-
     /**
      * Start the conversation.
      *
@@ -34,9 +28,9 @@ class StartConversation extends Conversation
         return $this->ask($question, function (Answer $answer) {
             if ($answer->isInteractiveMessageReply()) {
                 if ($answer->getValue() === 'start') {
-                    (new Steps\Relabel);
+                    $this->bot->startConversation(new Relabel());
                 } else {
-                    $this->say('This is something based on the work of Dr. Jeffrey Schwartz\'s');
+                    $this->say('This is something based on the work of Dr. Jeffrey Schwartz\'s.  More here soon.');
                 }
             }
         });

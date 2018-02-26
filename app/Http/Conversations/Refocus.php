@@ -8,8 +8,7 @@ use App\Contracts\Steps;
 
 class Refocus extends Conversation implements Steps
 {
-    protected $question = 'Step 2 - Work around the OCD/ADDICTION thoughts by focusing your attention on something else, at least for a few minutes: DO ANOTHER BEHAVIOR.';
-    protected $answer_step2;
+    protected $question = 'Step 3 - Re-focus';
 
     /**
      * @return mixed
@@ -21,9 +20,11 @@ class Refocus extends Conversation implements Steps
                 $this->askExtended();
             }
 
-            $this->answer_step2 = $answer->getText();
+            $this->bot->userStorage()->save([
+                'step3' => $answer->getText()
+            ]);
 
-            $this->bot->startConversation(new Refocus());
+            $this->bot->startConversation(new Revalue());
         });
     }
 
@@ -38,6 +39,6 @@ class Refocus extends Conversation implements Steps
      */
     public function run()
     {
-        $this->bot->startConversation(new StartConversation());
+        $this->askQuestion();
     }
 }

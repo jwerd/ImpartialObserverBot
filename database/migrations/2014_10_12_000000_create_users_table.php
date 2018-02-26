@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('provider')->nullable()->index();
             $table->string('provider_id')->nullable()->index();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

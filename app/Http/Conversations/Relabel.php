@@ -8,7 +8,7 @@ use App\Contracts\Steps;
 
 class Relabel extends Conversation implements Steps
 {
-    protected $question = 'Step 1 - Relabel: Recognize that the intrusive obsessive thoughts and urges are the RESULT OF OCD/ADDICTION.';
+    protected $question = 'Step 1 - Re-label';
     protected $answer_step1;
 
     /**

@@ -41,9 +41,6 @@ class BotManController extends Controller
                 'provider_id' => $bot->getUser()->getId()
             ]);
 
-            // Login
-            Auth::loginUsingId($user->id);
-
             \Log::info("Logging in user with id: ".Auth::id());
 
             $bot->startConversation(new StartConversation());

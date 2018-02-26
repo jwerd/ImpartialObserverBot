@@ -6,6 +6,8 @@ use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Conversations\Conversation;
+use Illuminate\Support\Facades\Auth;
+
 
 class StartConversation extends Conversation
 {
@@ -27,6 +29,7 @@ class StartConversation extends Conversation
         return $this->ask($question, function (Answer $answer) {
             if ($answer->isInteractiveMessageReply()) {
                 if ($answer->getValue() === 'start') {
+                    \Log::info("Step StartConversation with id: ".Auth::id());
                     $this->bot->startConversation(new Relabel());
                 } else {
                     $this->say('This is something based on the work of Dr. Jeffrey Schwartz\'s.  More here soon.');

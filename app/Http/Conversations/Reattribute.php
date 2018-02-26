@@ -5,12 +5,10 @@ namespace App\Http\Conversations;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Conversations\Conversation;
 use App\Contracts\Steps;
-use Illuminate\Support\Facades\Auth;
 
 class Reattribute extends Conversation implements Steps
 {
-    protected $question = 'Step 2 - Reattribute: Realize that the intensity and intrusiveness of the thought or urge is CAUSED BY OCD; it is probably related to a biochemical imbalance in the brain.';
-    protected $answer_step2;
+    protected $question = 'Step 2 - Re-attribute';
 
     /**
      * @return mixed
@@ -22,9 +20,9 @@ class Reattribute extends Conversation implements Steps
                 $this->askExtended();
             }
 
-            \Log::info("Step Reattribute with id: ".Auth::id());
-
-            $this->answer_step2 = $answer->getText();
+            $this->bot->userStorage()->save([
+                'step2' => $answer->getText()
+            ]);
 
             $this->bot->startConversation(new Refocus());
         });

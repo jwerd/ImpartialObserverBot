@@ -4,22 +4,34 @@ namespace App\Http\Conversations;
 
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Conversations\Conversation;
+use App\Contracts\Steps;
 
-class Revalue extends Conversation
+class Revalue extends Conversation implements Steps
 {
-    protected $name;
+    protected $question = 'Step 4 - Re-value';
 
     /**
      * @return mixed
      */
-    public function askForName()
+    public function askQuestion()
     {
-        $this->ask('What is your name?', function(Answer $answer) {
+        $this->ask($this->question, function(Answer $answer) {
+            if($answer->getText() === "more") {
+                $this->askExtended();
+            }
 
-            $this->name = $answer->getText();
+            $this->bot->userStorage()->save([
+                'step4' => $answer->getText()
+            ]);
 
-            $this->say('Nice to meet you '.$this->name);
+            \Log::info($this->bot->userStorage()->all());
+
+            $this->bot->startConversation(new StartConversation());
         });
+    }
+
+    public function askExtended()
+    {
     }
 
     /**
@@ -29,6 +41,6 @@ class Revalue extends Conversation
      */
     public function run()
     {
-        $this->askForName();
+        $this->askQuestion();
     }
 }

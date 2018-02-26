@@ -3,27 +3,25 @@
 namespace App\Http\Conversations;
 
 use BotMan\BotMan\Messages\Incoming\Answer;
-use BotMan\BotMan\Messages\Conversations\Conversation;
 use App\Contracts\Steps;
 
-class Relabel extends Conversation implements Steps
+class Relabel extends BaseConversation implements Steps
 {
-    protected $question = 'Step 1 - Re-label';
-    protected $answer_step1;
-
     /**
      * @return mixed
      */
     public function askQuestion()
     {
-        $this->ask($this->question, function(Answer $answer) {
-            if($answer->getText() === "more") {
-                $this->askExtended();
+        $question = $this->stepQuestion('Step 1: Re-label - In Step 1 you label your {{addictive_thought}} for what it is, not mistaking it for reality. I may feel, for example, that I must leave off whatever I’m doing right now and partake in this {{addictive_thought}}. The feeling takes on the quality of a need, of an imperative that must immediately be satisfied.
+
+ When we re-label, we give up the language of need. I say to myself: "I don’t need my {{addictive_thought}} now; I’m only having an obsessive thought that I have such a need. It’s not a real, objective need but a false belief. I may have a feeling of urgency, but there is actually nothing urgent going on."');
+
+        return $this->ask($question, function (Answer $answer) {
+            if ($answer->isInteractiveMessageReply()) {
+                if ($answer->getValue() === 'next') {
+                    $this->bot->startConversation(new Reattribute());
+                }
             }
-
-            $this->answer_step1 = $answer->getText();
-
-            $this->bot->startConversation(new Reattribute());
         });
     }
 

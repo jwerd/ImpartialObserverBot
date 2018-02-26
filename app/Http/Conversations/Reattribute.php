@@ -3,10 +3,9 @@
 namespace App\Http\Conversations;
 
 use BotMan\BotMan\Messages\Incoming\Answer;
-use BotMan\BotMan\Messages\Conversations\Conversation;
 use App\Contracts\Steps;
 
-class Reattribute extends Conversation implements Steps
+class Reattribute extends BaseConversation implements Steps
 {
     protected $question = 'Step 2 - Re-attribute';
 
@@ -15,16 +14,26 @@ class Reattribute extends Conversation implements Steps
      */
     public function askQuestion()
     {
-        $this->ask($this->question, function(Answer $answer) {
-            if($answer->getText() === "more") {
-                $this->askExtended();
+        $question = $this->stepQuestion('Step 2: Re-attribute - “In Re-attribute you learn to place the blame squarely on your brain. This is my brain sending me a false message.” This step is designed to assign the re-labelled addictive urge to its proper source.
+
+Say the following:
+
+My {{addictive_thought}} is the following:
+- Rooted in my childhood
+- Deeply ingrained in my brain
+- Has nothing to do with me
+- Out of my control
+- What I control is how I respond. 
+
+I\'m compassionate and curious about my addictions origins.  I know this thought or urge will come back and I will repeat these steps again.  Most important: I won\'t get frustrated.
+');
+
+        return $this->ask($question, function (Answer $answer) {
+            if ($answer->isInteractiveMessageReply()) {
+                if ($answer->getValue() === 'next') {
+                    $this->bot->startConversation(new Refocus());
+                }
             }
-
-            $this->bot->userStorage()->save([
-                'step2' => $answer->getText()
-            ]);
-
-            $this->bot->startConversation(new Refocus());
         });
     }
 

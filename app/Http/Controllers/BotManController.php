@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Conversations\StartConversation;
 use BotMan\BotMan\BotMan;
 use App\User;
-use Illuminate\Support\Facades\Auth;
 
 class BotManController extends Controller
 {
@@ -36,7 +35,7 @@ class BotManController extends Controller
         $provider = $bot->getDriver()->getName();
         if($provider !== "Web") {
             // Store our user
-            $user = User::firstOrCreate([
+            User::firstOrCreate([
                 'provider'    => $provider,
                 'provider_id' => $bot->getUser()->getId()
             ]);

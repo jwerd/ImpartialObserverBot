@@ -18,6 +18,9 @@ class Relabel extends BaseConversation implements Steps
 
         return $this->ask($question, function (Answer $answer) {
             if ($answer->isInteractiveMessageReply()) {
+                if($answer->getValue() === 'reset') {
+                    $this->bot->startConversation(new StartConversation());
+                }
                 if ($answer->getValue() === 'next') {
                     $this->bot->startConversation(new Reattribute());
                 }

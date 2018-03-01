@@ -26,6 +26,9 @@ Whatever buys you the next 15 minutes to allow the re-focus to happen.');
 
         return $this->ask($question, function (Answer $answer) {
             if ($answer->isInteractiveMessageReply()) {
+                if($answer->getValue() === 'reset') {
+                    $this->bot->startConversation(new StartConversation());
+                }
                 if ($answer->getValue() === 'next') {
                     $this->bot->startConversation(new Revalue());
                 }

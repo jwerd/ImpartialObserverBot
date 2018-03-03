@@ -9,7 +9,8 @@ abstract class BaseConversation extends Conversation
 {
     public function stepQuestion($text, $button = "Continue")
     {
-        $addictive_thought = ucwords($this->bot->userStorage()->get('addictive_thought'));
+        $addictive_thought = "My urge or thought to ".ucwords($this->bot->userStorage()->get('addictive_thought'));
+
         //$addictive_thought = !stristr($addictive_thought, 'Addiction') ? $addictive_thought. ' Addiction' : $addictive_thought;
 
         $question = Question::create(str_ireplace("{{addictive_thought}}", $addictive_thought, $text))

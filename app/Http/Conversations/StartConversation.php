@@ -15,7 +15,9 @@ class StartConversation extends BaseConversation
     {
         $this->ask("Greetings, I'm the Impartial Observer.  
         
-Describe your current addictive thought/urge:", function(Answer $answer) {
+Describe your current addictive thought/urge.
+
+My urge or thought to... ", function(Answer $answer) {
 
             $this->bot->userStorage()->save([
                 'addictive_thought' => $answer->getText()

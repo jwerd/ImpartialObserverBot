@@ -21,15 +21,14 @@ Do all this without judging yourself. You are gathering information, not conduct
 
 You did not come into life asking to be programmed this way. It’s not personal to you—millions of others with similar experiences have developed the same mechanisms. What is personal to you is how you respond to it in the present. Keep close to your impartial observer.
 
-What has been the value of my {{addictive_thought}}:');
+What has been the value of my {{addictive_thought}}?');
 
         return $this->ask($question, function (Answer $answer) {
+            $answer->getValue();
             if ($answer->isInteractiveMessageReply()) {
+
                 if($answer->getValue() === 'reset') {
                     $this->bot->startConversation(new StartConversation());
-                }
-                if ($answer->getValue() === 'next') {
-                    $this->bot->startConversation(new Revalue());
                 }
             }
         });

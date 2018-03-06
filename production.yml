@@ -77,6 +77,8 @@ networks:
   digi:
     driver: "bridge"
 volumes:
+  letsencrypt_certs: ~
+  letsencrypt_www: ~
   digimysql:
     driver: "local"
   digiredis:

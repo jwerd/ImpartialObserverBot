@@ -25,7 +25,7 @@ My {{addictive_thought}} is the following:
 - Out of my control
 - What I control is how I respond. 
 
-I\'m compassionate and curious about my addictions origins.  I know this thought or urge will come back and I will repeat these steps again.  Most important: I won\'t get frustrated.
+I\'m compassionate and curious about my addictions origins.  I know this thought or urge will come back and I will repeat these steps again.  Most importantly: I won\'t get frustrated.
 ');
 
         return $this->ask($question, function (Answer $answer) {

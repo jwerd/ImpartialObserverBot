@@ -1,7 +1,9 @@
 version: '2'
 services:
   proxy:
-    image: docker/proxynginx
+      build:
+        context: ./docker/proxynginx
+        dockerfile: Dockerfile
     volumes:
       - letsencrypt_certs:/etc/nginx/certs
       - letsencrypt_www:/var/www/letsencrypt
@@ -12,7 +14,9 @@ services:
       - "443:443"
     restart: always
   letsencrypt:
-    image: docker/letsencrypt
+    build:
+      context: ./docker/letsencrypt
+      dockerfile: Dockerfile
     command: /bin/true
     volumes:
       - letsencrypt_certs:/etc/letsencrypt

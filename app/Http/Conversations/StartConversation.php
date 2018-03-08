@@ -23,7 +23,12 @@ My current urge or thought to... ", function(Answer $answer) {
                 'addictive_thought' => $answer->getText()
             ]);
 
-            $this->bot->startConversation(new Relabel());
+            // Let's check if the bot is ussing a /start (we will just start over)
+            if($answer->getText() === "/start") {
+                return $this->bot->startConversation(new StartConversation());
+            }
+
+            return $this->bot->startConversation(new Relabel());
         });
     }
 }

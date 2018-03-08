@@ -34,7 +34,7 @@ class BotManController extends Controller
     {
         \Log::info('This is working...');
         $bot->startConversation(new StartConversation());
-        /*
+
         $provider = $bot->getDriver()->getName();
         if($provider !== "Web") {
             // Store our user
@@ -42,8 +42,8 @@ class BotManController extends Controller
                 'provider'    => $provider,
                 'provider_id' => $bot->getUser()->getId()
             ]);
+        }
 
-            $bot->startConversation(new StartConversation());
-        }*/
+        $bot->startConversation(new StartConversation());
     }
 }

@@ -23,7 +23,7 @@ My {{addictive_thought}} is the following:
 - Deeply ingrained in my brain
 - Has nothing to do with me
 - Out of my control
-- What I control is how I respond. 
+- What I control is how I respond.
 
 I\'m compassionate and curious about my addictions origins.  I know this thought or urge will come back and I will repeat these steps again.  Most importantly: I won\'t get frustrated.
 ');

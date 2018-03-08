@@ -32,6 +32,8 @@ class BotManController extends Controller
      */
     public function startConversation(BotMan $bot)
     {
+        $bot->startConversation(new StartConversation());
+        /*
         $provider = $bot->getDriver()->getName();
         if($provider !== "Web") {
             // Store our user
@@ -41,6 +43,6 @@ class BotManController extends Controller
             ]);
 
             $bot->startConversation(new StartConversation());
-        }
+        }*/
     }
 }

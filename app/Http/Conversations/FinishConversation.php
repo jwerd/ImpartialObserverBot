@@ -35,21 +35,21 @@ class FinishConversation extends BaseConversation implements Steps
                 if($answer->getValue() === 'reset') {
                     $this->bot->startConversation(new StartConversation());
                 }
-            }
+            } else {
+                if (!empty($answer->getText())) {
+                    $text = $this->bot->userStorage()->get('revalue_text');
 
-            if(!empty($answer->getText())) {
-                $text = $this->bot->userStorage()->get('revalue_text');
+                    // Append extra text
+                    if (!empty($text)) {
+                        $text .= $answer->getText();
+                    }
 
-                // Append extra text
-                if(!empty($text)) {
-                    $text .= $answer->getText();
+                    $this->bot->userStorage()->save([
+                        'revalue_text' => $text
+                    ]);
+
+                    $this->bot->startConversation(new FinishConversation());
                 }
-
-                $this->bot->userStorage()->save([
-                    'revalue_text' => $text
-                ]);
-
-                $this->bot->startConversation(new FinishConversation());
             }
         });
     }

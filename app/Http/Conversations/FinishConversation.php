@@ -9,8 +9,6 @@ use BotMan\BotMan\Messages\Outgoing\Question;
 
 class FinishConversation extends BaseConversation implements Steps
 {
-    protected $question = 'Step 4 - Re-value';
-
     /**
      * @return mixed
      */
@@ -21,28 +19,19 @@ class FinishConversation extends BaseConversation implements Steps
             ->callbackId('step')
             ->addButtons([
                 Button::create('I\'m Finished')->value('finished'),
-                Button::create('Start Over')->value('reset'),
             ]);
         return $this->ask($question, function (Answer $answer) {
 
             if ($answer->isInteractiveMessageReply()) {
-
                 if($answer->getValue() === 'finished') {
                     \Log::info('Completed', $this->bot->userStorage()->all());
-                    $this->bot->startConversation(new StartConversation());
-                }
-
-                if($answer->getValue() === 'reset') {
                     $this->bot->startConversation(new StartConversation());
                 }
             } else {
                 if (!empty($answer->getText())) {
                     $text = $this->bot->userStorage()->get('revalue_text');
 
-                    // Append extra text
-                    if (!empty($text)) {
-                        $text .= $answer->getText();
-                    }
+                    $text .= PHP_EOL.$answer->getText();
 
                     $this->bot->userStorage()->save([
                         'revalue_text' => $text

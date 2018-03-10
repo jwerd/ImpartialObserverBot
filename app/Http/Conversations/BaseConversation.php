@@ -23,7 +23,7 @@ abstract class BaseConversation extends Conversation
         return $question;
     }
 
-    public function stepFinalQuestion($text, $button = "Continue")
+    public function stepFinalQuestion($text)
     {
         $addictive_thought = "urge or thought to ".ucwords($this->bot->userStorage()->get('addictive_thought'));
 
@@ -31,10 +31,7 @@ abstract class BaseConversation extends Conversation
 
         $question = Question::create(str_ireplace("{{addictive_thought}}", $addictive_thought, $text))
             ->fallback('Unable to proceed')
-            ->callbackId('step')
-            ->addButtons([
-                Button::create('Start Over')->value('reset'),
-            ]);
+            ->callbackId('step');
         return $question;
     }
 }

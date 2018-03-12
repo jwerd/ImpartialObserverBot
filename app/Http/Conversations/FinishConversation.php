@@ -2,6 +2,8 @@
 
 namespace App\Http\Conversations;
 
+use App\Journal;
+use App\User;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use App\Contracts\Steps;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
@@ -25,6 +27,17 @@ class FinishConversation extends BaseConversation implements Steps
             if ($answer->isInteractiveMessageReply()) {
                 if($answer->getValue() === 'finished') {
                     \Log::info('Completed', $this->bot->userStorage()->all());
+
+                    $provider = $this->bot->getDriver()->getName();
+
+                    $journal = Journal::create([
+                        'subject' => $this->bot->userStorage()->get('addictive_thought'),
+                        'body'    => $this->bot->userStorage()->get('revalue_text'),
+                        'user_id' => User::getUserByProvider($provider, $this->bot->getUser()->getId())
+                    ]);
+
+                    \Log::info($journal);
+
                     $this->bot->startConversation(new StartConversation());
                 }
             } else {

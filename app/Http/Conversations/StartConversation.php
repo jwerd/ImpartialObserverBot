@@ -2,6 +2,7 @@
 
 namespace App\Http\Conversations;
 
+use App\User;
 use BotMan\BotMan\Messages\Incoming\Answer;
 
 class StartConversation extends BaseConversation

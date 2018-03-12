@@ -26,4 +26,13 @@ class User extends Authenticatable
     protected $hidden = [
         'remember_token',
     ];
+
+    public static function getUserByProvider($provider, $provider_id)
+    {
+        return self::select('id')
+            ->where('provider', $provider)
+            ->where('provider_id', $provider_id)
+            ->firstOrFail()
+            ->id;
+    }
 }

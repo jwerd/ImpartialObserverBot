@@ -38,6 +38,9 @@ class FinishConversation extends BaseConversation implements Steps
 
                     \Log::info($journal);
 
+                    // Remove the user storage for this instance since it's persisted to DB.
+                    $this->bot->userStorage()->delete();
+
                     $this->bot->startConversation(new StartConversation());
                 }
             } else {

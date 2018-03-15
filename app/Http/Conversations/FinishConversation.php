@@ -36,12 +36,13 @@ class FinishConversation extends BaseConversation implements Steps
                         'user_id' => User::getUserByProvider($provider, $this->bot->getUser()->getId())
                     ]);
 
+
                     \Log::info($journal);
 
                     // Remove the user storage for this instance since it's persisted to DB.
                     $this->bot->userStorage()->delete();
 
-                    $this->bot->startConversation(new StartConversation());
+                    $this->say('All set.  It takes courage to do what you just did.  When you are ready to start again, type /start');
                 }
             } else {
                 if (!empty($answer->getText())) {

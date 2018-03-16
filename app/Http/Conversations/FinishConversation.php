@@ -8,6 +8,7 @@ use BotMan\BotMan\Messages\Incoming\Answer;
 use App\Contracts\Steps;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\Question;
+use Validator;
 
 class FinishConversation extends BaseConversation implements Steps
 {
@@ -26,15 +27,30 @@ class FinishConversation extends BaseConversation implements Steps
 
             if ($answer->isInteractiveMessageReply()) {
                 if($answer->getValue() === 'finished') {
-                    \Log::info('Completed', $this->bot->userStorage()->all());
 
                     $provider = $this->bot->getDriver()->getName();
 
-                    $journal = Journal::create([
+                    $fields = [
                         'subject' => $this->bot->userStorage()->get('addictive_thought'),
-                        'body'    => $this->bot->userStorage()->get('revalue_text'),
+                        'body' => $this->bot->userStorage()->get('revalue_text'),
                         'user_id' => User::getUserByProvider($provider, $this->bot->getUser()->getId())
+                    ];
+
+                    $validator = Validator::make($fields, [
+                        'subject' => 'required|max:255',
+                        'body'    => 'required',
+                        'user_id' => 'required|integer',
                     ]);
+
+                    \Log::info('Completed', $this->bot->userStorage()->all());
+
+                    if ($validator->fails()) {
+                        $this->bot->reply('It appears the session timed out.  Can you try that again?');
+                        $this->bot->startConversation(new StartConversation());
+                        return true;
+                    }
+
+                    $journal = Journal::create($fields);
 
                     \Log::info($journal);
 

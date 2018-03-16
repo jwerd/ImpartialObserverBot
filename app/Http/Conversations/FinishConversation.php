@@ -48,7 +48,7 @@ class FinishConversation extends BaseConversation implements Steps
                 }
             } else {
                 if($answer->getText() === '/start') {
-                    $this->bot->startConversation(new FinishConversation());
+                    $this->bot->startConversation(new StartConversation());
                 } else {
                     if (!empty($answer->getText())) {
                         $text = $this->bot->userStorage()->get('revalue_text');

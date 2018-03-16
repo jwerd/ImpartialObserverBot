@@ -42,7 +42,7 @@ class FinishConversation extends BaseConversation implements Steps
                     // Remove the user storage for this instance since it's persisted to DB.
                     $this->bot->userStorage()->delete();
 
-                    $this->bot->say('All set.  It takes courage to do what you just did.  When you are ready to start again, type /start');
+                    $this->bot->reply('All set.  It takes courage to do what you just did.  When you are ready to start again, type /start');
 
                     $this->bot->stopsConversation();
                 }

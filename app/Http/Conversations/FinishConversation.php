@@ -47,16 +47,20 @@ class FinishConversation extends BaseConversation implements Steps
                     $this->bot->stopsConversation();
                 }
             } else {
-                if (!empty($answer->getText())) {
-                    $text = $this->bot->userStorage()->get('revalue_text');
-
-                    $text .= PHP_EOL.$answer->getText();
-
-                    $this->bot->userStorage()->save([
-                        'revalue_text' => $text
-                    ]);
-
+                if($answer->getText() === '/start') {
                     $this->bot->startConversation(new FinishConversation());
+                } else {
+                    if (!empty($answer->getText())) {
+                        $text = $this->bot->userStorage()->get('revalue_text');
+
+                        $text .= PHP_EOL . $answer->getText();
+
+                        $this->bot->userStorage()->save([
+                            'revalue_text' => $text
+                        ]);
+
+                        $this->bot->startConversation(new FinishConversation());
+                    }
                 }
             }
         });

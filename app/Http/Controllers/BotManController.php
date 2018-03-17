@@ -33,7 +33,6 @@ class BotManController extends Controller
     public function startConversation(BotMan $bot)
     {
         \Log::info('This is working...');
-        $bot->startConversation(new StartConversation());
 
         $provider = $bot->getDriver()->getName();
         if($provider !== "Web") {
